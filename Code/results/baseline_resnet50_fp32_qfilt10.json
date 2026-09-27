@@ -1,0 +1,53 @@
+{
+  "model": "ResNet-50 ArcFace FP32 (baseline)",
+  "weights_path": "C:\\Users\\akash\\.insightface\\models\\buffalo_l\\w600k_r50.onnx",
+  "accuracy_mean": 0.9983686282322211,
+  "accuracy_std": 0.001997019037702439,
+  "eer_threshold": 0.18159687519073486,
+  "bootstrap_ci": {
+    "ci_lower": 0.995512951254334,
+    "ci_upper": 0.9985723026718336
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.003088008234688626,
+      "FNMR": 0.0019093078758949881,
+      "n_impostor": 1943,
+      "n_genuine": 2095
+    },
+    "Black": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 211,
+      "n_genuine": 128
+    },
+    "Asian": {
+      "FMR": 0.004098360655737705,
+      "FNMR": 0.011235955056179775,
+      "n_impostor": 244,
+      "n_genuine": 267
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 8,
+      "n_genuine": 7
+    },
+    "FDR_FMR": 0.004098360655737705,
+    "FDR_FNMR": 0.011235955056179775
+  },
+  "n_pairs_total": 6000,
+  "n_pairs_valid_after_filter": 4903,
+  "quality_filter": {
+    "threshold_pct_excluded": 10,
+    "quality_cutoff_score": 0.27766733169555663,
+    "note": "Pairs excluded if either image's FaceQNet quality score is below the bottom-N% cutoff (computed on the full scored LFW population) or if SCRFD detection failed on that image. Filtering applied via the same None-cache-entry mechanism baseline_pipeline.py already uses for undetected faces -- lfw_10fold/compute_fairness_metrics unmodified."
+  },
+  "latency": {
+    "latency_median_ms": 26.6934,
+    "latency_p95_ms": 29.6939,
+    "latency_mean_ms": 26.7237,
+    "note": "Re-measured 2026-09-11 (median of 3 clean n_warmup=100/n_runs=1000 repeats) after the original session's INT8 p95 (62.1ms) was traced to external system contention on this shared laptop (background RGB-sync processes ASUS Aura/NGenuity, Balanced power plan), not an ORT/INT8 kernel issue -- the whole original session ran under elevated background load, so FP32 numbers were re-measured too for an apples-to-apples comparison. See dissertation note on benchmarking environment caveats."
+  },
+  "latency_note": "Reused from the unfiltered baseline run for this model -- latency is a per-inference model property independent of which pairs are included in the accuracy/fairness stats."
+}

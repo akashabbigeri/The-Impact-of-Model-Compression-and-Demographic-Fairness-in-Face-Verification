@@ -1,0 +1,44 @@
+{
+  "model": "ResNet-50 ArcFace FP32 (baseline)",
+  "accuracy_mean": 0.9983294088356022,
+  "accuracy_std": 0.0016683500576419393,
+  "eer_threshold": 0.17958059906959534,
+  "bootstrap_ci": {
+    "ci_lower": 0.9951529333110479,
+    "ci_upper": 0.9979943172321578
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.0037422037422037424,
+      "FNMR": 0.0024,
+      "n_impostor": 2405,
+      "n_genuine": 2500
+    },
+    "Black": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 258,
+      "n_genuine": 155
+    },
+    "Asian": {
+      "FMR": 0.006289308176100629,
+      "FNMR": 0.00946372239747634,
+      "n_impostor": 318,
+      "n_genuine": 317
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 13,
+      "n_genuine": 17
+    },
+    "FDR_FMR": 0.006289308176100629,
+    "FDR_FNMR": 0.00946372239747634
+  },
+  "latency": {
+    "latency_median_ms": 26.6934,
+    "latency_p95_ms": 29.6939,
+    "latency_mean_ms": 26.7237,
+    "note": "Re-measured 2026-09-11 (median of 3 clean n_warmup=100/n_runs=1000 repeats) after the original session's INT8 p95 (62.1ms) was traced to external system contention on this shared laptop (background RGB-sync processes ASUS Aura/NGenuity, Balanced power plan), not an ORT/INT8 kernel issue -- the whole original session ran under elevated background load, so FP32 numbers were re-measured too for an apples-to-apples comparison. See dissertation note on benchmarking environment caveats."
+  }
+}

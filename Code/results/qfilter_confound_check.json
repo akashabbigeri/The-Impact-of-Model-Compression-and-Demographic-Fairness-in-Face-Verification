@@ -1,0 +1,60 @@
+{
+  "total_images_per_subgroup": {
+    "White": 6359,
+    "Black": 473,
+    "Asian": 834,
+    "Unknown": 35
+  },
+  "detection_failures_per_subgroup": {
+    "White": 8,
+    "Black": 2,
+    "Asian": 1
+  },
+  "thresholds": {
+    "10": {
+      "cutoff_score": 0.27766733169555663,
+      "removed_per_subgroup": {
+        "White": 623,
+        "Black": 53,
+        "Unknown": 12,
+        "Asian": 92
+      },
+      "removal_rate_per_subgroup": {
+        "White": 0.09797137914766472,
+        "Black": 0.11205073995771671,
+        "Asian": 0.11031175059952038,
+        "Unknown": 0.34285714285714286
+      }
+    },
+    "20": {
+      "cutoff_score": 0.3210252523422241,
+      "removed_per_subgroup": {
+        "White": 1294,
+        "Black": 88,
+        "Unknown": 18,
+        "Asian": 149
+      },
+      "removal_rate_per_subgroup": {
+        "White": 0.20349111495518163,
+        "Black": 0.18604651162790697,
+        "Asian": 0.17865707434052758,
+        "Unknown": 0.5142857142857142
+      }
+    },
+    "30": {
+      "cutoff_score": 0.3508490711450577,
+      "removed_per_subgroup": {
+        "White": 1964,
+        "Black": 111,
+        "Unknown": 24,
+        "Asian": 219
+      },
+      "removal_rate_per_subgroup": {
+        "White": 0.30885359333228496,
+        "Black": 0.2346723044397463,
+        "Asian": 0.26258992805755393,
+        "Unknown": 0.6857142857142857
+      }
+    }
+  }
+}

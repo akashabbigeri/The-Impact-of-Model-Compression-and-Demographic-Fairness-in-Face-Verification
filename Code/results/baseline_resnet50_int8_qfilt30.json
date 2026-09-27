@@ -1,0 +1,53 @@
+{
+  "model": "ResNet-50 ArcFace INT8 (static QDQ, per-channel weights)",
+  "weights_path": "weights_variants\\w600k_r50_int8.onnx",
+  "accuracy_mean": 0.9993376829870059,
+  "accuracy_std": 0.0013247157201753375,
+  "eer_threshold": 0.2776581645011902,
+  "bootstrap_ci": {
+    "ci_lower": 0.9990350595046639,
+    "ci_upper": 1.0
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 1143,
+      "n_genuine": 1368
+    },
+    "Black": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 149,
+      "n_genuine": 98
+    },
+    "Asian": {
+      "FMR": 0.0,
+      "FNMR": 0.005263157894736842,
+      "n_impostor": 157,
+      "n_genuine": 190
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 2,
+      "n_genuine": 2
+    },
+    "FDR_FMR": 0.0,
+    "FDR_FNMR": 0.005263157894736842
+  },
+  "n_pairs_total": 6000,
+  "n_pairs_valid_after_filter": 3109,
+  "quality_filter": {
+    "threshold_pct_excluded": 30,
+    "quality_cutoff_score": 0.3508490711450577,
+    "note": "Pairs excluded if either image's FaceQNet quality score is below the bottom-N% cutoff (computed on the full scored LFW population) or if SCRFD detection failed on that image. Filtering applied via the same None-cache-entry mechanism baseline_pipeline.py already uses for undetected faces -- lfw_10fold/compute_fairness_metrics unmodified."
+  },
+  "latency": {
+    "latency_median_ms": 14.0882,
+    "latency_p95_ms": 16.4782,
+    "latency_mean_ms": 14.4922,
+    "note": "Original p95 (62.1ms vs 25.0ms median) diagnosed via onnxruntime profiling: NOT a warm-up artefact (measure_latency already discards 100 warm-up calls before timing) and NOT a periodic ORT-internal pattern (outlier gap distribution had no dominant period). Root cause: external system contention on this shared personal laptop (AMD Ryzen 7840HS, Balanced power plan, background RGB-sync processes ASUS Aura Sync + NZXT NGenuity polling for CPU cycles) -- confirmed because (1) FP32 showed a proportionally similar tail whenever contention was present, ruling out an INT8-specific kernel cause; (2) profiling of the slowest calls showed the excess wall-clock time was NOT attributable to any traced ORT op (sum of per-op durations was nearly identical between slow and median-speed calls) -- the extra time was lost between node executions, the signature of OS thread preemption, not slower compute; (3) three repeated clean re-measurements on 2026-09-11 all showed p95/median ratios of ~1.1-1.2x with no fat tail, vs the original run's 2.5x ratio. Latency figures above are the median of those 3 clean repeats (n_warmup=100, n_runs=1000 each, matching measure_latency() defaults). Recommend documenting in the dissertation that CPU latency benchmarks on this machine carry a system-contention caveat rather than presenting p95 as a precise, reproducible deployment figure."
+  },
+  "latency_note": "Reused from the unfiltered baseline run for this model -- latency is a per-inference model property independent of which pairs are included in the accuracy/fairness stats."
+}

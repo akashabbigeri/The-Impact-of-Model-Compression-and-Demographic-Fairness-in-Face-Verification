@@ -1,0 +1,45 @@
+{
+  "model": "ResNet-50 ArcFace Structured-Pruned (layer4-only, 40% mid-channel sparsity)",
+  "weights_path": "weights_variants\\w600k_r50_pruned.onnx",
+  "accuracy_mean": 0.9953226972698663,
+  "accuracy_std": 0.002866089953077487,
+  "eer_threshold": 0.5511460304260254,
+  "bootstrap_ci": {
+    "ci_lower": 0.9938158114658199,
+    "ci_upper": 0.9973257563095437
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.004573804573804574,
+      "FNMR": 0.0032,
+      "n_impostor": 2405,
+      "n_genuine": 2500
+    },
+    "Black": {
+      "FMR": 0.0,
+      "FNMR": 0.0064516129032258064,
+      "n_impostor": 258,
+      "n_genuine": 155
+    },
+    "Asian": {
+      "FMR": 0.006289308176100629,
+      "FNMR": 0.012618296529968454,
+      "n_impostor": 318,
+      "n_genuine": 317
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 13,
+      "n_genuine": 17
+    },
+    "FDR_FMR": 0.006289308176100629,
+    "FDR_FNMR": 0.012618296529968454
+  },
+  "latency": {
+    "latency_median_ms": 25.9307,
+    "latency_p95_ms": 29.6236,
+    "latency_mean_ms": 25.2294,
+    "note": "Re-measured 2026-09-11 under confirmed-clean conditions (RGB-sync/telemetry apps ASUS Aura Sync + NZXT NGenuity2Helper, GoogleDriveFS, Spotify, Chrome closed; power plan switched to High performance) for a consistent footing with the ResNet-50 FP32/INT8 re-benchmark, which found the original session ran under external system contention. This variant's original figures (median 25.46ms, p95 26.93ms) turned out close to the corrected ones -- little to no contention was present specifically during this run -- but it was re-measured anyway so all six variants share the same clean-session methodology (n_warmup=100, n_runs=1000, median of 3 repeats)."
+  }
+}

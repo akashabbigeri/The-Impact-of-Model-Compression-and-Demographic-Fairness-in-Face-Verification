@@ -1,0 +1,45 @@
+{
+  "model": "MobileFaceNet ArcFace FP32 (buffalo_s, InsightFace MS1MV3)",
+  "weights_path": "C:\\Users\\akash\\.insightface\\models\\buffalo_s\\w600k_mbf.onnx",
+  "accuracy_mean": 0.9956534945119634,
+  "accuracy_std": 0.0029128735314816606,
+  "eer_threshold": 0.19062648713588715,
+  "bootstrap_ci": {
+    "ci_lower": 0.9938158114658199,
+    "ci_upper": 0.9971586160788902
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.004573804573804574,
+      "FNMR": 0.004,
+      "n_impostor": 2405,
+      "n_genuine": 2500
+    },
+    "Black": {
+      "FMR": 0.003875968992248062,
+      "FNMR": 0.0,
+      "n_impostor": 258,
+      "n_genuine": 155
+    },
+    "Asian": {
+      "FMR": 0.006289308176100629,
+      "FNMR": 0.00946372239747634,
+      "n_impostor": 318,
+      "n_genuine": 317
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 13,
+      "n_genuine": 17
+    },
+    "FDR_FMR": 0.006289308176100629,
+    "FDR_FNMR": 0.00946372239747634
+  },
+  "latency": {
+    "latency_median_ms": 3.3288,
+    "latency_p95_ms": 4.0745,
+    "latency_mean_ms": 3.2736,
+    "note": "Re-measured 2026-09-11 under confirmed-clean conditions (RGB-sync/telemetry apps ASUS Aura Sync + NZXT NGenuity2Helper, GoogleDriveFS, Spotify, Chrome closed; power plan switched to High performance) for a consistent footing with the ResNet-50 FP32/INT8 re-benchmark, which found the original session ran under external system contention. This variant's original figures (median 3.46ms, p95 4.06ms) were already close to the corrected ones -- as a small/fast model it was less exposed to contention effects -- but it was re-measured anyway so all six variants share the same clean-session methodology (n_warmup=100, n_runs=1000, median of 3 repeats)."
+  }
+}

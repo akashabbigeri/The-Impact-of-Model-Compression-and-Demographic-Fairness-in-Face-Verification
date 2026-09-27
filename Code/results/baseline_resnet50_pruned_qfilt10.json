@@ -1,0 +1,53 @@
+{
+  "model": "ResNet-50 ArcFace Structured-Pruned (layer4-only, 40% mid-channel sparsity)",
+  "weights_path": "weights_variants\\w600k_r50_pruned.onnx",
+  "accuracy_mean": 0.9965373684122125,
+  "accuracy_std": 0.0022388880179508987,
+  "eer_threshold": 0.5673795938491821,
+  "bootstrap_ci": {
+    "ci_lower": 0.9953089944931675,
+    "ci_upper": 0.9985723026718336
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.002058672156459084,
+      "FNMR": 0.002386634844868735,
+      "n_impostor": 1943,
+      "n_genuine": 2095
+    },
+    "Black": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 211,
+      "n_genuine": 128
+    },
+    "Asian": {
+      "FMR": 0.00819672131147541,
+      "FNMR": 0.011235955056179775,
+      "n_impostor": 244,
+      "n_genuine": 267
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 8,
+      "n_genuine": 7
+    },
+    "FDR_FMR": 0.00819672131147541,
+    "FDR_FNMR": 0.011235955056179775
+  },
+  "n_pairs_total": 6000,
+  "n_pairs_valid_after_filter": 4903,
+  "quality_filter": {
+    "threshold_pct_excluded": 10,
+    "quality_cutoff_score": 0.27766733169555663,
+    "note": "Pairs excluded if either image's FaceQNet quality score is below the bottom-N% cutoff (computed on the full scored LFW population) or if SCRFD detection failed on that image. Filtering applied via the same None-cache-entry mechanism baseline_pipeline.py already uses for undetected faces -- lfw_10fold/compute_fairness_metrics unmodified."
+  },
+  "latency": {
+    "latency_median_ms": 25.9307,
+    "latency_p95_ms": 29.6236,
+    "latency_mean_ms": 25.2294,
+    "note": "Re-measured 2026-09-11 under confirmed-clean conditions (RGB-sync/telemetry apps ASUS Aura Sync + NZXT NGenuity2Helper, GoogleDriveFS, Spotify, Chrome closed; power plan switched to High performance) for a consistent footing with the ResNet-50 FP32/INT8 re-benchmark, which found the original session ran under external system contention. This variant's original figures (median 25.46ms, p95 26.93ms) turned out close to the corrected ones -- little to no contention was present specifically during this run -- but it was re-measured anyway so all six variants share the same clean-session methodology (n_warmup=100, n_runs=1000, median of 3 repeats)."
+  },
+  "latency_note": "Reused from the unfiltered baseline run for this model -- latency is a per-inference model property independent of which pairs are included in the accuracy/fairness stats."
+}

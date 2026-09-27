@@ -1,0 +1,53 @@
+{
+  "model": "ResNet-50 ArcFace INT8 (static QDQ, per-channel weights)",
+  "weights_path": "weights_variants\\w600k_r50_int8.onnx",
+  "accuracy_mean": 0.9982528869335091,
+  "accuracy_std": 0.0024746408187234312,
+  "eer_threshold": 0.18199050426483154,
+  "bootstrap_ci": {
+    "ci_lower": 0.9959442332065906,
+    "ci_upper": 0.9992395437262357
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.001963350785340314,
+      "FNMR": 0.0017825311942959,
+      "n_impostor": 1528,
+      "n_genuine": 1683
+    },
+    "Black": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 178,
+      "n_genuine": 113
+    },
+    "Asian": {
+      "FMR": 0.004878048780487805,
+      "FNMR": 0.00881057268722467,
+      "n_impostor": 205,
+      "n_genuine": 227
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 6,
+      "n_genuine": 5
+    },
+    "FDR_FMR": 0.004878048780487805,
+    "FDR_FNMR": 0.00881057268722467
+  },
+  "n_pairs_total": 6000,
+  "n_pairs_valid_after_filter": 3945,
+  "quality_filter": {
+    "threshold_pct_excluded": 20,
+    "quality_cutoff_score": 0.3210252523422241,
+    "note": "Pairs excluded if either image's FaceQNet quality score is below the bottom-N% cutoff (computed on the full scored LFW population) or if SCRFD detection failed on that image. Filtering applied via the same None-cache-entry mechanism baseline_pipeline.py already uses for undetected faces -- lfw_10fold/compute_fairness_metrics unmodified."
+  },
+  "latency": {
+    "latency_median_ms": 14.0882,
+    "latency_p95_ms": 16.4782,
+    "latency_mean_ms": 14.4922,
+    "note": "Original p95 (62.1ms vs 25.0ms median) diagnosed via onnxruntime profiling: NOT a warm-up artefact (measure_latency already discards 100 warm-up calls before timing) and NOT a periodic ORT-internal pattern (outlier gap distribution had no dominant period). Root cause: external system contention on this shared personal laptop (AMD Ryzen 7840HS, Balanced power plan, background RGB-sync processes ASUS Aura Sync + NZXT NGenuity polling for CPU cycles) -- confirmed because (1) FP32 showed a proportionally similar tail whenever contention was present, ruling out an INT8-specific kernel cause; (2) profiling of the slowest calls showed the excess wall-clock time was NOT attributable to any traced ORT op (sum of per-op durations was nearly identical between slow and median-speed calls) -- the extra time was lost between node executions, the signature of OS thread preemption, not slower compute; (3) three repeated clean re-measurements on 2026-09-11 all showed p95/median ratios of ~1.1-1.2x with no fat tail, vs the original run's 2.5x ratio. Latency figures above are the median of those 3 clean repeats (n_warmup=100, n_runs=1000 each, matching measure_latency() defaults). Recommend documenting in the dissertation that CPU latency benchmarks on this machine carry a system-contention caveat rather than presenting p95 as a precise, reproducible deployment figure."
+  },
+  "latency_note": "Reused from the unfiltered baseline run for this model -- latency is a per-inference model property independent of which pairs are included in the accuracy/fairness stats."
+}

@@ -1,0 +1,53 @@
+{
+  "model": "MobileFaceNet ArcFace Structured-Pruned (last-4-of-12 blocks, 15% mid-width sparsity)",
+  "weights_path": "weights_variants\\w600k_mbf_pruned.onnx",
+  "accuracy_mean": 0.9983901561584739,
+  "accuracy_std": 0.003007473801405825,
+  "eer_threshold": 0.33626577258110046,
+  "bootstrap_ci": {
+    "ci_lower": 0.996132196847861,
+    "ci_upper": 0.9993567063364426
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.0008748906386701663,
+      "FNMR": 0.0029239766081871343,
+      "n_impostor": 1143,
+      "n_genuine": 1368
+    },
+    "Black": {
+      "FMR": 0.006711409395973154,
+      "FNMR": 0.0,
+      "n_impostor": 149,
+      "n_genuine": 98
+    },
+    "Asian": {
+      "FMR": 0.006369426751592357,
+      "FNMR": 0.0,
+      "n_impostor": 157,
+      "n_genuine": 190
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 2,
+      "n_genuine": 2
+    },
+    "FDR_FMR": 0.006711409395973154,
+    "FDR_FNMR": 0.0029239766081871343
+  },
+  "n_pairs_total": 6000,
+  "n_pairs_valid_after_filter": 3109,
+  "quality_filter": {
+    "threshold_pct_excluded": 30,
+    "quality_cutoff_score": 0.3508490711450577,
+    "note": "Pairs excluded if either image's FaceQNet quality score is below the bottom-N% cutoff (computed on the full scored LFW population) or if SCRFD detection failed on that image. Filtering applied via the same None-cache-entry mechanism baseline_pipeline.py already uses for undetected faces -- lfw_10fold/compute_fairness_metrics unmodified."
+  },
+  "latency": {
+    "latency_median_ms": 3.7819,
+    "latency_p95_ms": 5.3111,
+    "latency_mean_ms": 4.1128,
+    "note": "Re-measured 2026-09-11 under confirmed-clean conditions (RGB-sync/telemetry apps ASUS Aura Sync + NZXT NGenuity2Helper, GoogleDriveFS, Spotify, Chrome closed; power plan switched to High performance) for a consistent footing with the ResNet-50 FP32/INT8 re-benchmark, which found the original session ran under external system contention. Original figures were median 3.63ms, p95 4.28ms; the corrected p95 (5.31ms) is somewhat higher across the 3 repeats (one repeat saw a transient p95 of 7.02ms) -- likely residual jitter from this small/fast model's short calls rather than the same contention pattern seen in ResNet-50, but reported as measured rather than smoothed further. Methodology: n_warmup=100, n_runs=1000, median of 3 repeats, same as all other variants."
+  },
+  "latency_note": "Reused from the unfiltered baseline run for this model -- latency is a per-inference model property independent of which pairs are included in the accuracy/fairness stats."
+}

@@ -1,0 +1,45 @@
+{
+  "model": "ResNet-50 ArcFace INT8 (static QDQ, per-channel weights)",
+  "weights_path": "weights_variants\\w600k_r50_int8.onnx",
+  "accuracy_mean": 0.9981621847553347,
+  "accuracy_std": 0.0015736393519757833,
+  "eer_threshold": 0.18199050426483154,
+  "bootstrap_ci": {
+    "ci_lower": 0.9958214942336621,
+    "ci_upper": 0.9984957379241184
+  },
+  "fairness": {
+    "White": {
+      "FMR": 0.002494802494802495,
+      "FNMR": 0.002,
+      "n_impostor": 2405,
+      "n_genuine": 2500
+    },
+    "Black": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 258,
+      "n_genuine": 155
+    },
+    "Asian": {
+      "FMR": 0.006289308176100629,
+      "FNMR": 0.00946372239747634,
+      "n_impostor": 318,
+      "n_genuine": 317
+    },
+    "Unknown": {
+      "FMR": 0.0,
+      "FNMR": 0.0,
+      "n_impostor": 13,
+      "n_genuine": 17
+    },
+    "FDR_FMR": 0.006289308176100629,
+    "FDR_FNMR": 0.00946372239747634
+  },
+  "latency": {
+    "latency_median_ms": 14.0882,
+    "latency_p95_ms": 16.4782,
+    "latency_mean_ms": 14.4922,
+    "note": "Original p95 (62.1ms vs 25.0ms median) diagnosed via onnxruntime profiling: NOT a warm-up artefact (measure_latency already discards 100 warm-up calls before timing) and NOT a periodic ORT-internal pattern (outlier gap distribution had no dominant period). Root cause: external system contention on this shared personal laptop (AMD Ryzen 7840HS, Balanced power plan, background RGB-sync processes ASUS Aura Sync + NZXT NGenuity polling for CPU cycles) -- confirmed because (1) FP32 showed a proportionally similar tail whenever contention was present, ruling out an INT8-specific kernel cause; (2) profiling of the slowest calls showed the excess wall-clock time was NOT attributable to any traced ORT op (sum of per-op durations was nearly identical between slow and median-speed calls) -- the extra time was lost between node executions, the signature of OS thread preemption, not slower compute; (3) three repeated clean re-measurements on 2026-09-11 all showed p95/median ratios of ~1.1-1.2x with no fat tail, vs the original run's 2.5x ratio. Latency figures above are the median of those 3 clean repeats (n_warmup=100, n_runs=1000 each, matching measure_latency() defaults). Recommend documenting in the dissertation that CPU latency benchmarks on this machine carry a system-contention caveat rather than presenting p95 as a precise, reproducible deployment figure."
+  }
+}

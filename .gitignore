@@ -1,0 +1,23 @@
+# Model weights (large binaries)
+weights/
+Code/weights_variants/
+
+# Datasets (large, downloadable)
+Code/data/lfw/
+Code/data/lfw.tgz
+Data/lfw-deepfunneled/
+
+# Large numpy caches
+*.npy
+
+# Python
+__pycache__/
+*.pyc
+
+# Claude local settings
+.claude/
+**/.claude/
+
+# OS
+.DS_Store
+Thumbs.db
